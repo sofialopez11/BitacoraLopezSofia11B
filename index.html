@@ -5,25 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aetheria SafeRide | Proyecto Final IRTRA Petapa</title>
 
-    <!-- Favicon de la institución -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://www.capouilliez.edu.gt/assets/img/logo.png">
 
     <!-- Tipografía Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* ========================================================
-           ESTILOS BASE & VARIABLES
+           ESTILOS BASE & ESTÉTICA MODERN GIRLIE
            ======================================================== */
         :root {
             --rosa-brillante: #ff70a6;
-            --rosa-suave: #ff9ebb;
+            --rosa-pastel: #ffd6e0;
+            --violeta-suave: #c082a2;
             --azul-acento: #70d6ff;
             --fondo-oscuro: #0f0c20;
-            --tarjeta-bg: rgba(255, 255, 255, 0.92);
-            --borde-glow: rgba(255, 112, 166, 0.4);
+            --tarjeta-bg: rgba(255, 255, 255, 0.95);
+            --borde-glow: rgba(255, 112, 166, 0.3);
         }
 
         html, body {
@@ -37,7 +41,7 @@
             display: flex;
             flex-direction: column;
             text-align: center;
-            background: linear-gradient(135deg, rgba(15, 12, 32, 0.85), rgba(40, 20, 50, 0.9)), url('fondo.jpg'); 
+            background: linear-gradient(135deg, rgba(15, 12, 32, 0.88), rgba(40, 20, 50, 0.92)), url('fondo.jpg'); 
             background-size: cover;          
             background-position: center;    
             background-repeat: no-repeat;    
@@ -47,8 +51,8 @@
 
         /* ENCABEZADO */
         header {
-            padding: 35px 20px 25px 20px;
-            background: rgba(255, 240, 245, 0.15); 
+            padding: 30px 20px;
+            background: rgba(255, 240, 245, 0.12); 
             backdrop-filter: blur(12px); 
             border-bottom: 2px solid var(--rosa-brillante);
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -71,66 +75,153 @@
             font-size: 0.95rem;
             margin-top: 8px;
             font-weight: 400;
-            letter-spacing: 0.5px;
         }
 
         /* CONTENEDOR PRINCIPAL */
         main {
             flex: 1;
             padding: 40px 20px;
-            max-width: 800px; 
+            max-width: 850px; 
             margin: 0 auto;  
             width: 90%;       
             box-sizing: border-box;
         }
 
-        /* TARJETAS DE SECCIÓN (Basadas en la clase .semana) */
-        .seccion-card {
+        /* GRID DE TARJETAS TIPO MENÚ (PÁGINA INICIAL) */
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .card-boton {
             background-color: var(--tarjeta-bg);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 35px;
+            border-radius: 20px;
+            padding: 35px 25px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), 0 0 15px var(--borde-glow);
-            border-left: 6px solid var(--rosa-brillante);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            text-align: left;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .seccion-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(255, 112, 166, 0.4);
-            border-left-color: var(--azul-acento);
+        .card-boton:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 112, 166, 0.4);
+            border-color: var(--rosa-brillante);
+            background-color: #ffffff;
         }
 
-        .seccion-card h2 {
-            margin-top: 0;
-            margin-bottom: 12px;
+        .card-boton i {
+            font-size: 2.8rem;
+            color: var(--rosa-brillante);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .card-boton:hover i {
+            transform: scale(1.15) rotate(5deg);
             color: #d63384;
-            font-size: 1.4rem;
+        }
+
+        .card-boton h3 {
+            margin: 10px 0 8px 0;
+            color: #2b2d42;
+            font-size: 1.25rem;
+        }
+
+        .card-boton p {
+            color: #6c757d;
+            font-size: 0.88rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .badge-click {
+            margin-top: 15px;
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--rosa-pastel);
+            color: #d63384;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* VISTAS DE CONTENIDO INDIVIDUALES (OCULTAS POR DEFECTO) */
+        .vista-contenido {
+            display: none; /* Se activa con JS */
+            background-color: var(--tarjeta-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--borde-glow);
+            border-top: 6px solid var(--rosa-brillante);
+            text-align: left;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-regresar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--rosa-pastel);
+            color: #d63384;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-regresar:hover {
+            background: var(--rosa-brillante);
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        .vista-contenido h2 {
+            margin-top: 0;
+            color: #d63384;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .seccion-card p {
+        .vista-contenido p {
             color: #4a4e69;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
-        /* MODIFICACIÓN DE REPRODUCTORES Y VISORES */
-        video, embed, iframe {
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        /* ELEMENTOS MULTIMEDIA */
+        video, embed {
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 112, 166, 0.2);
             background: #000;
         }
 
         .pdf-container {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
         }
 
@@ -172,6 +263,9 @@
             h1 {
                 font-size: 1.6rem;
             }
+            .vista-contenido {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -186,50 +280,95 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main>
 
-        <!-- SECCIÓN 1: CIRCUITO & SIMULACIÓN -->
-        <div class="seccion-card">
-            <h2> Simulación del Circuito en Tinkercad</h2>
+        <!-- PÁGINA INICIAL: MENU DE CUADRADOS (TARJETAS) -->
+        <div id="menu-principal" class="grid-menu">
+            
+            <!-- Cuadrado 1: Circuito -->
+            <div class="card-boton" onclick="abrirSeccion('seccion-circuito')">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>Circuito & Simulación</h3>
+                <p>Demostración interactiva del prototipo programado en Tinkercad.</p>
+                <span class="badge-click">Ver Video <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Cuadrado 2: Podcast -->
+            <div class="card-boton" onclick="abrirSeccion('seccion-podcast')">
+                <i class="fa-solid fa-podcast"></i>
+                <h3>Podcast Informativo</h3>
+                <p>Audio explicativo sobre la lógica del código C++ y su aplicación.</p>
+                <span class="badge-click">Escuchar Audio <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Cuadrado 3: Infografía -->
+            <div class="card-boton" onclick="abrirSeccion('seccion-infografia')">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3>Infografía Técnica</h3>
+                <p>Resumen visual del rendimiento y la alineación con los ODS 3 y 9.</p>
+                <span class="badge-click">Ver Infografía <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Cuadrado 4: Documento PDF -->
+            <div class="card-boton" onclick="abrirSeccion('seccion-informe')">
+                <i class="fa-solid fa-file-pdf"></i>
+                <h3>Informe Formal PDF</h3>
+                <p>Documentación técnica completa, esquemas y marco teórico.</p>
+                <span class="badge-click">Leer Documento <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================
+             VISTAS DE CONTENIDO SEPARADAS (SE ABREN AL DAR CLIC)
+           ======================================================== -->
+
+        <!-- VISTA 1: CIRCUITO -->
+        <div id="seccion-circuito" class="vista-contenido">
+            <button class="btn-regresar" onclick="volverAlMenu()"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+            <h2><i class="fa-solid fa-microchip"></i> Simulación del Circuito en Tinkercad</h2>
             <p>
-                Demostración del sistema de control electrónico integrado con **Arduino Uno R3**, sensores infrarrojos (PIR), ultrasónicos (HC-SR04) y actuadores de alerta perimetral en tiempo real.
+                En esta sección se presenta la simulación en tiempo real del prototipo **Aetheria SafeRide**. Se observa el funcionamiento de los sensores ultrasónicos HC-SR04, detección infrarroja PIR y el sistema de alertas audibles y luminosas en caso de intrusión perimetral.
             </p>
-            <video width="100%" controls style="margin-top: 5px;">
+            <video width="100%" controls>
                 <source src="Recursos/grabacion2.mp4" type="video/mp4">
                 Tu navegador no soporta la reproducción de video.
             </video>
         </div>
 
-        <!-- SECCIÓN 2: PODCAST INFORMATIVO -->
-        <div class="seccion-card">
-            <h2> Podcast Informativo del Proyecto</h2>
+        <!-- VISTA 2: PODCAST -->
+        <div id="seccion-podcast" class="vista-contenido">
+            <button class="btn-regresar" onclick="volverAlMenu()"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+            <h2><i class="fa-solid fa-podcast"></i> Podcast Informativo del Proyecto</h2>
             <p>
-                Explicación audible sobre la arquitectura del prototipo, la lógica de programación en C++ y la resolución de problemáticas operativas dentro del parque IRTRA Petapa.
+                Escucha a nuestro equipo consultor explicando la arquitectura del prototipo, los desafíos encontrados en la programación en C++ y el impacto positivo en la seguridad operacional del parque IRTRA Petapa.
             </p>
-            <!-- Puedes usar un video o una etiqueta <audio> según el archivo que exportes de Clipchamp -->
-            <video width="100%" controls style="margin-top: 5px;">
+            <video width="100%" controls>
                 <source src="Recursos/Podcast_Aetheria.mp4" type="video/mp4">
                 Tu navegador no soporta la reproducción de video/audio.
             </video>
         </div>
 
-        <!-- SECCIÓN 3: INFOGRAFÍA EJECUTIVA -->
-        <div class="seccion-card">
-            <h2> Infografía Técnica & Alineación ODS</h2>
+        <!-- VISTA 3: INFOGRAFÍA -->
+        <div id="seccion-infografia" class="vista-contenido">
+            <button class="btn-regresar" onclick="volverAlMenu()"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+            <h2><i class="fa-solid fa-chart-pie"></i> Infografía Técnica & Alineación ODS</h2>
             <p>
-                Resumen visual con las métricas de rendimiento, la integración de hardware y la alineación estratégica del proyecto con los Objetivos de Desarrollo Sostenible (ODS 3 y ODS 9).
+                Visualización ejecutiva de la infraestructura del proyecto y su vinculación directa con el **ODS 3 (Salud y Bienestar)** y el **ODS 9 (Industria, Innovación e Infraestructura)**.
             </p>
             <div class="pdf-container">
-                <embed src="Recursos/Infografia_Aetheria.pdf" type="application/pdf" width="100%" height="480px" />
+                <embed src="Recursos/Infografia_Aetheria.pdf" type="application/pdf" width="100%" height="520px" />
             </div>
         </div>
 
-        <!-- SECCIÓN 4: INFORME DE INVESTIGACIÓN FORMAL -->
-        <div class="seccion-card">
-            <h2> Documento de Investigación Formal</h2>
+        <!-- VISTA 4: INFORME FORMAL PDF -->
+        <div id="seccion-informe" class="vista-contenido">
+            <button class="btn-regresar" onclick="volverAlMenu()"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</button>
+            <h2><i class="fa-solid fa-file-pdf"></i> Documento de Investigación Formal</h2>
             <p>
-                Documentación técnica en formato PDF que recopila el marco teórico, los esquemas de conexiones, el código fuente y las conclusiones de ingeniería del prototipo.
+                Consulta el documento técnico completo en PDF que incluye el marco teórico, metodología de desarrollo, diagramas de circuito y conclusiones del proyecto.
             </p>
             <div class="pdf-container">
-                <embed src="Recursos/Informe_Final_Aetheria.pdf" type="application/pdf" width="100%" height="500px" />
+                <embed src="Recursos/Informe_Final_Aetheria.pdf" type="application/pdf" width="100%" height="550px" />
             </div>
         </div>
 
@@ -240,6 +379,36 @@
         <span>2026 @soffisboringg | Tecnología Undécimo</span>
         <img src="https://www.capouilliez.edu.gt/assets/img/logo.png" alt="Logo Capouilliez" width="140" height="40">
     </footer>
+
+    <!-- LÓGICA DE NAVEGACIÓN EN JAVASCRIPT -->
+    <script>
+        function abrirSeccion(idSeccion) {
+            // Oculta el menú principal de tarjetas
+            document.getElementById('menu-principal').style.display = 'none';
+
+            // Oculta todas las secciones por si hay alguna abierta
+            const secciones = document.querySelectorAll('.vista-contenido');
+            secciones.forEach(sec => sec.style.display = 'none');
+
+            // Muestra únicamente la sección seleccionada
+            document.getElementById(idSeccion).style.display = 'block';
+
+            // Desplaza suavemente hacia arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function volverAlMenu() {
+            // Oculta todas las secciones individuales
+            const secciones = document.querySelectorAll('.vista-contenido');
+            secciones.forEach(sec => sec.style.display = 'none');
+
+            // Muestra nuevamente el menú de tarjetas
+            document.getElementById('menu-principal').style.display = 'grid';
+
+            // Desplaza suavemente hacia arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
